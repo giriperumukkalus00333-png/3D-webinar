@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkedIn Personal Branding & Growth System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-blue: #0a66c2;
+      --primary-light: #d6e3ff;
+      --primary-dark: #004e99;
+      --text-dark: #131b2e;
+      --text-gray: #414752;
+      --border-light: rgba(193, 198, 212, 0.4);
+      --bg-light: #f2f3ff;
+      --bg-white: #ffffff;
+      --success-green: #10b981;
+      --success-light: #059669;
+      --warning-yellow: #f59e0b;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text-dark);
+      background: linear-gradient(to bottom, #ffffff, #f2f3ff 50%, #faf8ff);
+      line-height: 1.6;
+    }
+
+    /* Hero Section Container */
+    .hero-section {
+      position: relative;
+      padding: 80px 24px 112px;
+      overflow: hidden;
+    }
+
+    /* Ambient glow decorator */
+    .ambient-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 70%;
+      max-width: 1280px;
+      height: 384px;
+      background: radial-gradient(ellipse at left, rgba(91, 184, 254, 0.1), transparent 70%);
+      filter: blur(32px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .hero-section {
+        padding: 60px 16px 80px;
+      }
+    }
+
+    /* Left Column: Hero Text Content */
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Badge Pill */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary-light);
+      border: 1px solid #a8c8ff;
+      padding: 7px 15px;
+      border-radius: 9999px;
+      width: fit-content;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .badge-icon {
+      font-size: 14px;
+    }
+
+    .badge-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary-dark);
+      letter-spacing: 0.48px;
+    }
+
+    /* Main Headline */
+    .headline {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .headline-blue {
+      color: var(--primary-blue);
+      position: relative;
+      display: inline-block;
+    }
+
+    .underline {
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 8"><path d="M0,4 Q25,2 50,4 T100,4" stroke="%230a66c2" stroke-width="2" fill="none"/></svg>') repeat-x;
+      background-size: auto 100%;
+    }
+
+    /* Subheadline */
+    .subheadline {
+      font-size: 18px;
+      color: var(--text-gray);
+      line-height: 1.55;
+      max-width: 672px;
+    }
+
+    /* Supporting Line with Checkmark */
+    .support-line {
+      display: flex;
+      gap: 8px;
+      background: rgba(226, 231, 255, 0.6);
+      border: 1px solid rgba(193, 198, 212, 0.5);
+      padding: 9px 15px;
+      border-radius: 8px;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+      max-width: 672px;
+    }
+
+    .support-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .support-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      letter-spacing: 0.14px;
+    }
+
+    /* CTAs Container */
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 8px;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .cta-group {
+        flex-direction: column;
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.14px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--primary-blue);
+      color: white;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary:hover {
+      background: #0855a0;
+      transform: translateY(-2px);
+      box-shadow: 0px 4px 12px rgba(10, 102, 194, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-white);
+      color: var(--text-dark);
+      border: 1px solid #c1c6d4;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-secondary:hover {
+      background: #f8f9fb;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-icon {
+      width: 13px;
+      height: 13px;
+    }
+
+    /* Trust Metrics */
+    .trust-section {
+      border-top: 1px solid rgba(193, 198, 212, 0.4);
+      padding-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .avatar-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatars {
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: fit-content;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+      overflow: hidden;
+      flex-shrink: 0;
+      margin-right: -8px;
+      background: var(--bg-light);
+    }
+
+    .avatar:last-child {
+      margin-right: 0;
+    }
+
+    .avatar-plus {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary-dark);
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      color: white;
+    }
+
+    .trust-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-gray);
+      letter-spacing: 0.48px;
+    }
+
+    /* Key Stats Pills */
+    .stats-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: white;
+      border: 1px solid rgba(193, 198, 212, 0.6);
+      padding: 5px 11px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+      white-space: nowrap;
+    }
+
+    .stat-icon {
+      font-size: 12px;
+    }
+
+    .stat-text {
+      color: var(--text-dark);
+      letter-spacing: 0.48px;
+    }
+
+    /* Right Column: Analytics Card */
+    .analytics-card {
+      background: white;
+      border: 1px solid rgba(193, 198, 212, 0.8);
+      border-radius: 12px;
+      padding: 21px;
+      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .analytics-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid #eaedff;
+      padding-bottom: 13px;
+    }
+
+    .profile-info {
+      display: flex;
+      gap: 12px;
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #dae2fd;
+      border: 1px solid #c1c6d4;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .profile-details h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    .profile-details p {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      letter-spacing: 0.48px;
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--primary-light);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    /* Metric Card */
+    .metric-card {
+      background: var(--bg-light);
+      border: 1px solid rgba(193, 198, 212, 0.4);
+      border-radius: 8px;
+      padding: 17px;
+    }
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .metric-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      letter-spacing: 0.48px;
+    }
+
+    .metric-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: #ecfdf5;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    .metric-badge-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--success-light);
+    }
+
+    .metric-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 4px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .metric-compare {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      letter-spacing: 0.48px;
+    }
+
+    /* Mini Bar Graph */
+    .bar-graph {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      justify-content: center;
+      padding-top: 8px;
+      height: 40px;
+    }
+
+    .bar {
+      border-radius: 4px 4px 0 0;
+      flex: 0 0 auto;
+    }
+
+    .bar-small { width: 54px; height: 8px; background: #dae2fd; }
+    .bar-med { width: 54px; height: 12px; background: #dae2fd; }
+    .bar-high { width: 54px; height: 24px; background: #a8c8ff; }
+    .bar-peak { width: 54px; height: 32px; background: var(--primary-blue); }
+    .bar-max { width: 54px; height: 40px; background: var(--primary-blue); box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); }
+
+    /* Mini Analytics Cards */
+    .mini-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .mini-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mini-card {
+      background: var(--bg-light);
+      border: 1px solid rgba(193, 198, 212, 0.4);
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    .mini-card-header {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .mini-card-icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    .mini-card-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-gray);
+      white-space: nowrap;
+    }
+
+    .mini-card-value {
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--text-dark);
+      margin: 4px 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .mini-card-note {
+      font-size: 11px;
+      color: var(--success-light);
+      font-weight: 500;
+    }
+
+    /* Viral Post Teaser */
+    .viral-post {
+      background: white;
+      border: 1px solid #e2e7ff;
+      border-radius: 8px;
+      padding: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .viral-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success-green);
+      flex-shrink: 0;
+    }
+
+    .viral-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-dark);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .viral-reach {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      white-space: nowrap;
+    }
+
+    /* Form Section */
+    .form-section {
+      background: var(--primary-light);
+      border: 1px solid #a8c8ff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .form-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .form-input {
+      padding: 10px 12px;
+      border: 1px solid #a8c8ff;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      background: white;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #999;
+    }
+
+    .form-submit {
+      background: var(--primary-blue);
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .form-submit:hover {
+      background: #0855a0;
+      box-shadow: 0px 4px 12px rgba(10, 102, 194, 0.3);
+    }
+
+    .form-submit:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .form-message {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      display: none;
+    }
+
+    .form-message.success {
+      background: #ecfdf5;
+      color: var(--success-light);
+      border: 1px solid #a7f3d0;
+      display: block;
+    }
+
+    .form-message.error {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+      display: block;
+    }
+
+    /* Responsive Images */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Utility Classes */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+  
+  <section class="hero-section">
+    <div class="hero-container">
+      <!-- Left Column: Hero Text Content -->
+      <div class="hero-text">
+        <!-- Badge -->
+        <div class="badge">
+          <span class="badge-icon">🚀</span>
+          <span class="badge-text">LinkedIn Personal Branding & Growth System</span>
+        </div>
+
+        <!-- Headline -->
+        <div class="headline">
+          Turn Your LinkedIn From
+          <span class="headline-blue">
+            Invisible
+            <span class="underline"></span>
+          </span>
+          to Influential
+        </div>
+
+        <!-- Subheadline -->
+        <p class="subheadline">
+          We don't just "optimize profiles." We build your personal brand from scratch — with strategy, content, and consistency that actually gets you seen.
+        </p>
+
+        <!-- Supporting Line -->
+        <div class="support-line">
+          <svg class="support-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#a8c8ff" stroke-width="2"/>
+            <path d="M9 12l2 2 4-4" stroke="#0a66c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="support-text">From 0 to hero on LinkedIn — without confusion, guesswork, or wasting months figuring it out alone.</span>
+        </div>
+
+        <!-- CTAs -->
+        <div class="cta-group">
+          <a href="https://payments.cashfree.com/forms/getaudit" class="btn btn-primary" target="_blank">
+            Get Your Profile Audit
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <button class="btn btn-secondary" onclick="document.querySelector('#form-section').scrollIntoView({ behavior: 'smooth' })">
+            Start Growing Today
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Trust Section -->
+        <div class="trust-section">
+          <div class="avatar-group">
+            <div class="avatars">
+              <div class="avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+              <div class="avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+              <div class="avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+              <div class="avatar-plus">+99</div>
+            </div>
+            <p class="trust-text">Trusted by 100+ ambitious founders & leaders</p>
+          </div>
+
+          <div class="stats-pills">
+            <div class="stat-pill">
+              <span class="stat-icon">★</span>
+              <span class="stat-text">4.9/5 Rating</span>
+            </div>
+            <div class="stat-pill">
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--primary-blue); display: inline-block;"></span>
+              <span class="stat-text">10M+ Organic Impressions</span>
+            </div>
+            <div class="stat-pill">
+              <span class="stat-icon">✓</span>
+              <span class="stat-text">100% Tailored Strategy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Analytics Card -->
+      <div class="analytics-card">
+        <!-- Header -->
+        <div class="analytics-header">
+          <div class="profile-info">
+            <div class="profile-avatar"></div>
+            <div class="profile-details">
+              <h3>Alex Rivera</h3>
+              <p>Founder @ ScaleOps • 48.2k Followers</p>
+            </div>
+          </div>
+          <span class="live-badge">Live Surge</span>
+        </div>
+
+        <!-- Impression Metric -->
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title">Post Impressions (Last 30 Days)</span>
+            <div class="metric-badge">
+              <span>📈</span>
+              <span class="metric-badge-text">+1,240%</span>
+            </div>
+          </div>
+          <div class="metric-value">1,842,900</div>
+          <p class="metric-compare">vs. 137k prior period</p>
+          <div class="bar-graph">
+            <div class="bar bar-small"></div>
+            <div class="bar bar-med"></div>
+            <div class="bar bar-small"></div>
+            <div class="bar bar-high"></div>
+            <div class="bar bar-high"></div>
+            <div class="bar bar-peak"></div>
+            <div class="bar bar-max"></div>
+          </div>
+        </div>
+
+        <!-- Mini Analytics Cards -->
+        <div class="mini-cards">
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-icon">💬</span>
+              <span class="mini-card-title">Inbound DMs</span>
+            </div>
+            <div class="mini-card-value">148 Leads</div>
+            <p class="mini-card-note">+42 high-ticket ops</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-header">
+              <span class="mini-card-icon">👁️</span>
+              <span class="mini-card-title">Profile Views</span>
+            </div>
+            <div class="mini-card-value">+680%</div>
+            <p class="mini-card-note">92% C-Suite & VCs</p>
+          </div>
+        </div>
+
+        <!-- Viral Post Teaser -->
+        <div class="viral-post">
+          <div style="display: flex; gap: 8px; align-items: center; flex: 1; min-width: 0;">
+            <div class="viral-indicator"></div>
+            <p class="viral-title">Viral Post: "Why we killed our 40-page deck..."</p>
+          </div>
+          <div class="viral-reach">420k reach</div>
+        </div>
+
+        <!-- Form Section -->
+        <div id="form-section" class="form-section">
+          <h3 class="form-title">Get Your Free Audit</h3>
+          <form id="auditForm">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-input" 
+                placeholder="Your full name" 
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-input" 
+                placeholder="you@example.com" 
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                class="form-input" 
+                placeholder="+1 (555) 000-0000" 
+                required
+              >
+            </div>
+
+            <button type="submit" class="form-submit">Submit Your Information</button>
+            <div id="formMessage" class="form-message"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Form submission handler
+    const form = document.getElementById('auditForm');
+    const messageDiv = document.getElementById('formMessage');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Get form values
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      // Validate
+      if (!name || !email || !phone) {
+        showError('Please fill in all fields');
+        return;
+      }
+
+      // Disable submit button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      // Build the URL with parameters
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbzff1KoQyE1pcijV8nHr7glqfmOEhxUcQYN4FOWJNkeCf81So74oaY8vh-E2o4pu8KBEw/exec';
+      const params = new URLSearchParams({
+        name: name,
+        email: email,
+        phone: phone
+      });
+
+      const url = scriptUrl + '?' + params.toString();
+
+      // Fetch with GET method, no-cors mode
+      fetch(url, {
+        method: 'GET',
+        mode: 'no-cors'
+      })
+        .then(() => {
+          showSuccess();
+          form.reset();
+        })
+        .catch(() => {
+          showError('Network error. Please try again.');
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Your Information';
+        });
+    });
+
+    function showSuccess() {
+      messageDiv.className = 'form-message success';
+      messageDiv.textContent = '✓ Success! We\'ll send you the audit details shortly.';
+      
+      setTimeout(() => {
+        messageDiv.className = 'form-message';
+        messageDiv.textContent = '';
+      }, 5000);
+    }
+
+    function showError(message) {
+      messageDiv.className = 'form-message error';
+      messageDiv.textContent = '✗ ' + message;
+      
+      setTimeout(() => {
+        messageDiv.className = 'form-message';
+        messageDiv.textContent = '';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
